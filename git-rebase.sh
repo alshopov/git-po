@@ -65,6 +65,7 @@ abort!             abort and check out the original branch
 skip!              skip current patch and continue
 "
 . git-sh-setup
+. git-sh-i18n
 set_reflog_action rebase
 require_work_tree_exists
 cd_to_toplevel
@@ -510,10 +511,10 @@ then
 	then
 		# Lazily switch to the target branch if needed...
 		test -z "$switch_to" || git checkout "$switch_to" --
-		say "Current branch $branch_name is up to date."
+		say "$(eval_gettext "Current branch \$branch_name is up to date.")"
 		exit 0
 	else
-		say "Current branch $branch_name is up to date, rebase forced."
+		say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
 	fi
 fi
 
@@ -533,7 +534,7 @@ fi
 test "$type" = interactive && run_specific_rebase
 
 # Detach HEAD and reset the tree
-say "First, rewinding head to replay your work on top of it..."
+say "$(gettext "First, rewinding head to replay your work on top of it...")"
 git checkout -q "$onto^0" || die "could not detach HEAD"
 git update-ref ORIG_HEAD $orig_head
 
@@ -541,7 +542,7 @@ git update-ref ORIG_HEAD $orig_head
 # we just fast-forwarded.
 if test "$mb" = "$orig_head"
 then
-	say "Fast-forwarded $branch_name to $onto_name."
+	say "$(eval_gettext "Fast-forwarded \$branch_name to \$onto_name.")"
 	move_to_original_branch
 	exit 0
 fi
