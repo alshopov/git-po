@@ -755,7 +755,7 @@ static void parse_rebase_merges_value(struct rebase_options *options, const char
 	else if (!strcmp("rebase-cousins", value))
 		options->rebase_cousins = 1;
 	else
-		die(_("Unknown rebase-merges mode: %s"), value);
+		die(_("Unknown --rebase-merges mode: %s"), value);
 }
 
 static int rebase_config(const char *var, const char *value,
